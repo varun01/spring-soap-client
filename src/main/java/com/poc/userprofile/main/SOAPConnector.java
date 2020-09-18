@@ -1,4 +1,4 @@
-package com.example.howtodoinjava.springbootsoapclient;
+package com.poc.userprofile.main;
 
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 

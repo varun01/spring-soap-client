@@ -1,0 +1,78 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                	xmlns:sch="http://www.example.com/xml/newuser"
+                	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                	xmlns:tns="http://www.example.com/xml/newuser"
+                	targetNamespace="http://www.example.com/xml/newuser">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         			elementFormDefault="qualified"
+         			targetNamespace="http://www.example.com/xml/newuser">
+			<xs:element name="NewUserProfileRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="userId"
+          							type="xs:int"/>
+						<xs:element name="userName"
+          							type="xs:string"/>
+						<xs:element name="userStatus"
+          							type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="NewUserProfileResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="response"
+          							type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="UserProfile">
+				<xs:sequence>
+					<xs:element name="userId"
+          						type="xs:int"/>
+					<xs:element name="userName"
+          						type="xs:string"/>
+					<xs:element name="userStatus"
+          						type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="NewUserProfileRequest">
+		<wsdl:part element="tns:NewUserProfileRequest"
+         			name="NewUserProfileRequest"> </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="NewUserProfileResponse">
+		<wsdl:part element="tns:NewUserProfileResponse"
+         			name="NewUserProfileResponse"> </wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="UserDetailsPortA">
+		<wsdl:operation name="NewUserProfile">
+			<wsdl:input message="tns:NewUserProfileRequest"
+          				name="NewUserProfileRequest"> </wsdl:input>
+			<wsdl:output message="tns:NewUserProfileResponse"
+           				name="NewUserProfileResponse"> </wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="UserDetailsPortASoap11"
+            		type="tns:UserDetailsPortA">
+		<soap:binding style="document"
+            			transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="NewUserProfile">
+			<soap:operation soapAction=""/>
+			<wsdl:input name="NewUserProfileRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="NewUserProfileResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="UserDetailsPortAService">
+		<wsdl:port binding="tns:UserDetailsPortASoap11"
+         			name="UserDetailsPortASoap11">
+			<soap:address location="http://localhost:8080/service/user-profile"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

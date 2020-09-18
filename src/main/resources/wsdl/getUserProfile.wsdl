@@ -1,0 +1,74 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                	xmlns:sch="http://www.example.com/xml/getuser"
+                	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                	xmlns:tns="http://www.example.com/xml/getuser"
+                	targetNamespace="http://www.example.com/xml/getuser">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         			elementFormDefault="qualified"
+         			targetNamespace="http://www.example.com/xml/getuser">
+			<xs:element name="GetUserProfileRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="userId"
+          							type="xs:int"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GetUserProfileResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="GetUserProfile"
+          							type="tns:GetUserProfile"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="GetUserProfile">
+				<xs:sequence>
+					<xs:element name="userId"
+          						type="xs:int"/>
+					<xs:element name="userName"
+          						type="xs:string"/>
+					<xs:element name="userStatus"
+          						type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="GetUserProfileResponse">
+		<wsdl:part element="tns:GetUserProfileResponse"
+         			name="GetUserProfileResponse"> </wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GetUserProfileRequest">
+		<wsdl:part element="tns:GetUserProfileRequest"
+         			name="GetUserProfileRequest"> </wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="UserDetailsPortB">
+		<wsdl:operation name="GetUserProfile">
+			<wsdl:input message="tns:GetUserProfileRequest"
+          				name="GetUserProfileRequest"> </wsdl:input>
+			<wsdl:output message="tns:GetUserProfileResponse"
+           				name="GetUserProfileResponse"> </wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="UserDetailsPortBSoap11"
+            		type="tns:UserDetailsPortB">
+		<soap:binding style="document"
+            			transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetUserProfile">
+			<soap:operation soapAction=""/>
+			<wsdl:input name="GetUserProfileRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetUserProfileResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="UserDetailsPortBService">
+		<wsdl:port binding="tns:UserDetailsPortBSoap11"
+         			name="UserDetailsPortBSoap11">
+			<soap:address location="http://localhost:8080/service/get-user-profile"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
